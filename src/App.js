@@ -21,8 +21,9 @@ const list = [
 ];
 
 class App extends Component {
-  // the constructor is used to initialise local component state
+  // the constructor is used to initialise local component  state
   constructor(props) {
+    // set this.props in the constructor for access
     super(props);
 
     // state of the component
@@ -33,8 +34,18 @@ class App extends Component {
     this.onDismiss = this.onDismiss.bind(this);
   }
 
-  onDismiss(id) {}
+  // function to remove items from the list when the dismiss button is clicked
+  onDismiss(id) {
+    // function to determine if the id of the clicked item matched that of the item on the list
+    const isNotId = item => item.objectID !== id;
 
+    // update the list depending on the returned value from the isNotId function
+    const updatedList = this.state.list.filter(isNotId);
+    // update the state of the component
+    this.setState({ list: updatedList });
+  }
+
+  // the render method runs everytime state of the component changes in order to update the view
   render() {
     // destructure the list property of state
     const { list } = this.state;
@@ -42,6 +53,8 @@ class App extends Component {
     return (
       <div className="App">
         {list.map(item => {
+          /* const onHandleDismiss=()=> this.onDismiss(item.objectID); */
+
           return (
             <div key={item.objectID}>
               <span>
@@ -52,6 +65,7 @@ class App extends Component {
               <span>{item.points}</span>
               <span>
                 <button
+                  /* return a function that gets executed every time the button is clicked */
                   onClick={() => this.onDismiss(item.objectID)}
                   type="button"
                 >
