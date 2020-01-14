@@ -61,14 +61,32 @@ class App extends Component {
 
     return (
       <div className="App">
-        <form>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={this.onSearchChange}
-          />
-        </form>
-        {list.filter(isSearched(searchTerm)).map(item => {
+        <Search value={searchTerm} onChange={this.onSearchChange} />
+        <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
+      </div>
+    );
+  }
+}
+
+class Search extends Component {
+  render() {
+    // destructure the props that have been passed down from the parent component
+    const { value, onChange } = this.props;
+    return (
+      <form>
+        <input type="text" value={value} onChange={onChange} />
+      </form>
+    );
+  }
+}
+
+class Table extends Component {
+  render() {
+    // destructure the props that have been passed down from the parent component
+    const { list, pattern, onDismiss } = this.props;
+    return (
+      <div>
+        {list.filter(isSearched(pattern)).map(item => {
           /* const onHandleDismiss=()=> this.onDismiss(item.objectID); */
           return (
             <div key={item.objectID}>
@@ -81,7 +99,7 @@ class App extends Component {
               <span>
                 <button
                   /* return a function that gets executed every time the button is clicked */
-                  onClick={() => this.onDismiss(item.objectID)}
+                  onClick={() => onDismiss(item.objectID)}
                   type="button"
                 >
                   Dismiss
