@@ -54,9 +54,9 @@ class App extends Component {
     // function to determine if the id of the clicked item matched that of the item on the list
     const isNotId = item => item.objectID !== id;
     // update the list depending on the returned value from the isNotId function
-    const updatedList = this.state.list.filter(isNotId);
+    const updatedHits = this.state.result.hits.filter(isNotId);
     // update the state of the component
-    this.setState({ list: updatedList });
+    this.setState({ result: { ...this.state.result, updatedHits } });
   }
   // function to filter the output based on what the user inputs into the form
   onSearchChange(event) {
